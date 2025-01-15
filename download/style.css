@@ -34,39 +34,31 @@ body {
 }
 
 .cmusic_appTitle {
-    font-size: 77px;
+    font-size: 50px;
     font-weight: bolder;
     color: #dde8fc;
 }
 
-@media only screen and (max-width: 1100px) {
+.clip {
+    background: -webkit-linear-gradient(120deg, #bd34fe 30%, #66ccff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@media only screen and (min-width: 640px) {
     .cmusic_textCross {
-        font-size: 3vw;
+        font-size: 3vmin;
     }
 
     .cmusic_textMain {
-        font-size: 3vw;
+        font-size: 3vmin;
     }
 
     .cmusic_appTitle {
-        font-size: 7vw;
+        font-size: 7vmin;
     }
 }
-
-@media only screen and (max-width: 600px) {
-    .cmusic_textCross {
-        font-size: 16px;
-    }
-
-    .cmusic_textMain {
-        font-size: 16px;
-    }
-
-    .cmusic_appTitle {
-        font-size: 40px;
-    }
-}
-
 
 /*列表ul样式*/
 .cmusic_playList_ul {
@@ -92,9 +84,9 @@ body {
 }
 
 .cmusic_icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 7px;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
     padding-left: 0px;
     padding-right: 10px;
 }

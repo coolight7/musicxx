@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./images/MimicryMusic-s.png">
+    <title>『拟声』绑定百度网盘账号</title>
+</head>
+
+<body style="display: flex;flex-direction: column;">
+    <div style="height: 20px;"></div>
+    <div id="loading" class="cmusic_column">
+        <div
+            style="display: flex;flex-direction: column; justify-content: center;align-items: center;margin-bottom: 10px;">
+            <svg class="pl2" viewBox="0 0 128 128" width="128px" height="128px">
+                <g fill="var(--primary)">
+                    <g class="pl2__rect-g">
+                        <rect class="pl2__rect" rx="8" ry="8" x="0" y="128" width="40" height="24"
+                            transform="rotate(180)" />
+                    </g>
+                    <g class="pl2__rect-g">
+                        <rect class="pl2__rect" rx="8" ry="8" x="44" y="128" width="40" height="24"
+                            transform="rotate(180)" />
+                    </g>
+                    <g class="pl2__rect-g">
+                        <rect class="pl2__rect" rx="8" ry="8" x="88" y="128" width="40" height="24"
+                            transform="rotate(180)" />
+                    </g>
+                </g>
+                <g fill="#66ccff" mask="url(#pl-mask)">
+                    <g class="pl2__rect-g">
+                        <rect class="pl2__rect" rx="8" ry="8" x="0" y="128" width="40" height="24"
+                            transform="rotate(180)" />
+                    </g>
+                    <g class="pl2__rect-g">
+                        <rect class="pl2__rect" rx="8" ry="8" x="44" y="128" width="40" height="24"
+                            transform="rotate(180)" />
+                    </g>
+                    <g class="pl2__rect-g">
+                        <rect class="pl2__rect" rx="8" ry="8" x="88" y="128" width="40" height="24"
+                            transform="rotate(180)" />
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <span class="cmusic_textMain">正在绑定百度网盘账号...</span>
+    </div>
+    <div id="bind_success" style="display: none;" class="cmusic_column">
+        <span class="cmusic_textMain">百度网盘账号绑定成功！</span>
+        <span style="margin-top: 10px;" class="cmusic_textCross">请关闭当前页面，返回App</span>
+    </div>
+    <div id="bind_faild" style="display: none;" class="cmusic_column">
+        <span class="cmusic_textMain">百度网盘账号绑定失败！</span>
+        <span style="margin-top: 10px;" class="cmusic_textCross">请关闭当前页面，返回App重试</span>
+    </div>
+    <script src="./run.js"></script>
+</body>
+<style>
+    * {
+        border: 0;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        overflow-x: hidden;
+        background: #2f363e;
+    }
+
+    .cmusic_column {
+        display: flex;
+        flex-direction: column;
+         align-items: center;
+    }
+
+    .cmusic_textCross {
+        font-size: large;
+        font-weight: normal;
+        color: #78778f;
+    }
+
+    .cmusic_textMain {
+        font-size: x-large;
+        font-weight: bolder;
+        color: #dde8fc;
+    }
+
+    .pl2 {
+        display: block;
+        width: 8em;
+        height: 8em;
+    }
+
+    .pl2__rect,
+    .pl2__rect-g {
+        animation: pl1-a 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+
+    .pl2__rect,
+    .pl2__rect-g {
+        animation-name: pl2-a;
+    }
+
+    .pl2__rect {
+        animation-name: pl2-b;
+    }
+
+    .pl2__rect-g .pl2__rect {
+        transform-origin: 20px 128px;
+    }
+
+    .pl2__rect-g:first-child,
+    .pl2__rect-g:first-child .pl2__rect {
+        animation-delay: -0.25s;
+    }
+
+    .pl2__rect-g:nth-child(2),
+    .pl2__rect-g:nth-child(2) .pl2__rect {
+        animation-delay: -0.125s;
+    }
+
+    .pl2__rect-g:nth-child(2) .pl2__rect {
+        transform-origin: 64px 128px;
+    }
+
+    .pl2__rect-g:nth-child(3) .pl2__rect {
+        transform-origin: 108px 128px;
+    }
+
+    @keyframes pl2-a {
+
+        from,
+        25%,
+        66.67%,
+        to {
+            transform: translateY(0);
+        }
+
+        50% {
+            animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0);
+            transform: translateY(-80px);
+        }
+    }
+
+    @keyframes pl2-b {
+
+        from,
+        to {
+            animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0);
+            width: 40px;
+            height: 24px;
+            transform: rotate(180deg) translateX(0);
+        }
+
+        33.33% {
+            animation-timing-function: cubic-bezier(0.33, 1, 0.67, 1);
+            width: 20px;
+            height: 64px;
+            transform: rotate(180deg) translateX(10px);
+        }
+
+        66.67% {
+            animation-timing-function: cubic-bezier(0.33, 1, 0.67, 1);
+            width: 28px;
+            height: 44px;
+            transform: rotate(180deg) translateX(6px);
+        }
+    }
+</style>
+
+</html>
