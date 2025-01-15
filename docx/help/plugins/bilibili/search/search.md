@@ -1,4 +1,4 @@
-## 搜索bili歌曲
+# 搜索bili歌曲
 
 - 在首页点击顶部的搜索即可搜索bili歌曲：
 ![alt text](image-3.png)

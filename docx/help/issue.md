@@ -17,7 +17,7 @@
 ## 用户相关
 
 ### 收不到邮箱验证码
-- [点击前往查看](user/reciveEmailCode)
+- [点击前往查看](user/reciveEmailCode/)
 
 ## 插件相关
 

@@ -5,8 +5,8 @@
 
 ## 功能
 - 绑定B站账号
-- [搜索B站的视频和音频歌曲](/help/plugins/bilibili/search)
-- 导入Bili收藏夹
+- [搜索B站的视频和音频歌曲](/help/plugins/bilibili/search/)
+- [导入Bili收藏夹](/help/plugins/bilibili/star/)
 - 导入Bili视频合集
 - 导入B站UP的投稿
 

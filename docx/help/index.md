@@ -63,7 +63,7 @@
 - [插件的查看和安装、更新、卸载](/help/plugins/)
 - 拟声的基础功能之外，许多亮眼的功能都放在了插件之中，以下是目前拟声支持的插件：
 - [Bilibili](/help/plugins/bilibili/)
-  - [搜索Bili歌曲](/help/plugins/bilibili/search)
+  - [搜索Bili歌曲](/help/plugins/bilibili/search/)
   - [导入Bili收藏夹]
   - [导入Bili视频合集]
   - [批量导入Bili视频]
@@ -72,7 +72,7 @@
 - [百度云盘]
 - [音乐云盘]
 - [WebDav](/help/plugins/webdav/)
-- [共享与控制]
+- [共享与控制](/help/plguins/share/)
 - [音乐动效]
 - [音效]
 - [自动任务]
@@ -82,6 +82,6 @@
 ## 综合指南
 - [降低卡顿]
 - [车机使用指南]
-- [电视使用指南](/help/platform/tv)
+- [电视使用指南](/help/platform/tv/)
 - [多端同步与跨设备播放]
 - [听书、看剧指南]
