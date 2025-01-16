@@ -4,6 +4,9 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   lang: 'zh-Hans',
   title: "拟声",
+  head: [
+    ["meta", { name: "keywords", content: "拟声,拟声app,音乐,歌词弹幕,状态栏歌词,桌面歌词,悬浮歌词,共享与控制,下载,新拟物,音乐云盘,阿里云盘,百度云盘,webdav,coolight,musicxx,mimicrymusic,mymusic,download,music,lyric,mediaplayer,app,android,ios,windows,macos,linux" }]
+  ],
   description: "拟物风音视频播放器",
   appearance: "dark",
   lastUpdated: true,
