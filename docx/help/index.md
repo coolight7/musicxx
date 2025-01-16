@@ -72,7 +72,7 @@
 - [百度云盘]
 - [音乐云盘]
 - [WebDav](/help/plugins/webdav/)
-- [共享与控制](/help/plguins/share/)
+- [共享与控制](/help/plugins/share/)
 - [音乐动效]
 - [音效]
 - [自动任务]
