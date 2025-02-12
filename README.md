@@ -1,4 +1,4 @@
-# MimicryMusic 拟声
+# Musicxx 拟声
 * [官网](https://blog.mimicry.cool/)
 * [下载官网](https://download.music.mimicry.cool/)
 * [GitHub](https://github.com/coolight7/MimicryMusic)
@@ -19,14 +19,12 @@
   * QQ注册/登录
 
 ## 预览图
-![Shell_20230804-204952-189-](https://github.com/coolight7/MimicryMusic/assets/91963225/7184ad63-51fd-4cb1-aa8f-0653fe5f149b)
-![Shell_20230804-205003-346-](https://github.com/coolight7/MimicryMusic/assets/91963225/e1cccc89-59f6-42c4-836a-ead9a3089ce0)
-![Shell_20230804-210217-664-](https://github.com/coolight7/MimicryMusic/assets/91963225/206a7014-3539-43fe-9da4-fcc0730e96cd)
-![Shell_20230804-210229-972-](https://github.com/coolight7/MimicryMusic/assets/91963225/e084322f-4f9a-4cf0-9bd5-293c0e47c6aa)
-![Shell_20230804-211233-367-](https://github.com/coolight7/MimicryMusic/assets/91963225/6302a253-ee33-410f-b280-8d3852b1c996)
+| - | - | - | - | - |
+| ------ | ------ | ------ | ------ | ------ |
+| ![alt text](res/image/image.png) | ![alt text](res/image/image-2.png) |![alt text](res/image/image-3.png) | ![alt text](res/image/image-4.png) | ![alt text](res/image/image-5.png) |
 
 ## 支持平台：
-- android (安卓4.1及以上，支持arm64-v8a/armeabi-v7a/x86_64)
+- android (安卓4.1及以上，arm64-v8a/armeabi-v7a/x86_64)
 - windows (Win10及以上，x86_64)
 - macos（Macos11及以上，arm64/x86_64）
 - linux（arm64/x86_64）
