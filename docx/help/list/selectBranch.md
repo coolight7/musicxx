@@ -26,7 +26,7 @@
 - 支持`mpris`媒体通知和歌词
 - 目前未进行打包，仅仅压缩为 tar.gz，您可以直接解压缩，安装依赖后双击运行
 - 依赖包：
-  - `libmpv1`
+  - `libmpv1` 或 `mpv`
   - `libkeybinder-3.0-0`
   - `libayatana-appindicator3-1`
   - `libayatana-ido3-0.4-0`
