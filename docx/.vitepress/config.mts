@@ -17,7 +17,7 @@ export default defineConfig({
       { text: '下载', link: 'https://download.music.mimicry.cool/' },
       { text: '了解拟声', link: '/info/' },
       { text: '使用帮助', link: '/help/' },
-      { text: '关于作者', link: '/about/author' },
+      { text: '关于作者', link: '/about/author/' },
     ],
 
     sidebar: [
