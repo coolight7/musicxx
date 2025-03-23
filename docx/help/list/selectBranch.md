@@ -20,23 +20,28 @@
 - 支持 x86_64位 Win10/Win11
 - 部分安全软件可能会报毒，只要确定是在**拟声官网**下载的就不用担心。
 
+## macos
+- 支持 arm64/x86_64，Macos 11 或更高。
+
 ## linux
-- 支持 arm64/x86_64
+- 支持 x86_64
 - 目前完成了一些基础功能适配，欢迎体验尝鲜~
 - 支持`mpris`媒体通知和歌词
-- 目前未进行打包，仅仅压缩为 tar.gz，您可以直接解压缩，安装依赖后双击运行
-- 依赖包：
+- 已经打包成`AppImage`，下载后直接双击运行，或者在命令行 ./{拟声程序包名称} 即可运行
+- 注意需要先安装依赖包：
+  - `libgtk-3-0`
+  - `libblkid1`
+  - `liblzma5`
   - `libmpv1` 或 `mpv`
+  - `ffmpeg`
   - `libkeybinder-3.0-0`
   - `libayatana-appindicator3-1`
   - `libayatana-ido3-0.4-0`
+- Ubuntu 用户可以使用以下命令，其他系统可以询问AI如何安装上述依赖包：
 ```sh
-apt install libmpv1 libkeybinder-3.0-0 libayatana-appindicator3-1 libayatana-ido3-0.4-0  # ubuntu安装依赖
-tar -zxvf {安装包文件名}                 # 解压
+# ubuntu 安装依赖
+apt install libgtk-3-0 libblkid1 liblzma5 libmpv1 ffmpeg libkeybinder-3.0-0 libayatana-appindicator3-1 libayatana-ido3-0.4-0
 ```
-
-## macos
-- 支持 arm64/x86_64，Macos 11 或更高。
 
 ## IOS/鸿蒙
 - 敬请期待
