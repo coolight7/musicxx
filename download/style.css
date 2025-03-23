@@ -33,6 +33,14 @@ body {
     color: #dde8fc;
 }
 
+.cmusic_textLink {
+    font-size: large;
+    font-weight: normal;
+    color: #78778f;
+    color: #66ccff;
+    display: block;
+}
+
 .cmusic_appTitle {
     font-size: 50px;
     font-weight: bolder;

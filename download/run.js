@@ -260,7 +260,7 @@ function getDepict(system, branch) {
         case "linux":
             return '• 系统要求：arm64/x64\n'
                 + '• 实现了部分基础功能，体验尝鲜~\n'
-                + '• 需要安装依赖包，建议查看<a href="https://blog.mimicry.cool/help/list/selectBranch.html#linux">安装帮助</a>';
+                + '• 需要安装依赖包，建议查看<a class="cmusic_textLink" href="https://blog.mimicry.cool/help/list/selectBranch.html#linux">安装帮助</a>';
     }
     return ""
 }
