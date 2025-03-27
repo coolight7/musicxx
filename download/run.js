@@ -207,6 +207,8 @@ function systemTypeToViewName(type) {
     switch (type) {
         case "android":
             return "安卓";
+        case 'ios':
+            return "ios";
         case "windows":
             return "windows";
         case "macos":
@@ -221,6 +223,8 @@ function systemTypeToIconFile(type) {
     switch (type) {
         case "android":
             return "android.png";
+        case "ios":
+            return "apple.png";
         case "windows":
             return "windows.png";
         case "macos":
@@ -236,7 +240,7 @@ function branchTypeToViewName(type) {
         case "SPA4":
             return "泛支持版";
         case "Main":
-            return "完整版";
+            return "";
     }
 }
 
@@ -244,13 +248,13 @@ function getDepict(system, branch) {
     switch (system) {
         case "android":
             if (branch == "Main") {
-                return '• 系统要求：Android 5.0 或以上; \n'
-                    + '• 完整的播放能力和功能支持。';
+                return '• 系统要求：Android 5.0 或以上';
             } else if (branch == "SPA4") {
                 return '• 系统要求：Android 4.1 或以上;\n'
-                    + '• 当完整版闪退时可尝试该版本。\n'
-                    + '• 支持安卓4.x，移除了播放组件Libmpv，因此缺失了部分播放能力。';
+                    + '• 为兼容安卓4.x，舍弃了很多功能和性能，且已经很久未更新，不建议使用该分支。';
             }
+        case 'ios':
+            return '• 系统要求：arm64 IOS 12.1 或以上';
         case "windows":
             if (branch == "Main") {
                 return '• 系统要求：x64 Windows 10 或以上';
@@ -258,8 +262,7 @@ function getDepict(system, branch) {
         case "macos":
             return '• 系统要求：arm64/x64 Macos11 或以上';
         case "linux":
-            return '• 系统要求：arm64/x64\n'
-                + '• 实现了部分基础功能，体验尝鲜~\n'
+            return '• 系统要求：x64\n'
                 + '• 需要安装依赖包，建议查看<a class="cmusic_textLink" href="https://blog.mimicry.cool/help/list/selectBranch.html#linux">安装帮助</a>';
     }
     return ""
