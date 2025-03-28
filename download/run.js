@@ -208,7 +208,7 @@ function systemTypeToViewName(type) {
         case "android":
             return "安卓";
         case 'ios':
-            return "ios";
+            return "IPhone";
         case "windows":
             return "windows";
         case "macos":
