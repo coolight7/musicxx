@@ -232,7 +232,7 @@ function systemTypeToIconFile(type) {
         case "linux":
             return "linux.png";
     }
-    return "";
+    return "gravatar.jpg";
 }
 
 function branchTypeToViewName(type) {
@@ -254,7 +254,8 @@ function getDepict(system, branch) {
                     + '• 为兼容安卓4.x，舍弃了很多功能和性能，且已经很久未更新，不建议使用该分支。';
             }
         case 'ios':
-            return '• 系统要求：arm64 IOS 12.1 或以上';
+            return '• 系统要求：arm64 IOS 12.1 或以上\n'
+                + '• 目前仅开放 未签名安装包，需要自行搜索如何安装\n';
         case "windows":
             if (branch == "Main") {
                 return '• 系统要求：x64 Windows 10 或以上';
