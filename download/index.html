@@ -313,6 +313,7 @@
         </div>
     </div>
     <div class="mimicry_column musicxx_hide" id="adaptBody">
+        <span class="cmusic_textMain" id="checkEnableJS">您的浏览器已禁用JavaScript，请开启才能正常浏览当前网页</span>
         <div class="mimicry_column" style="flex:1; align-items: center; padding-top: 30px;">
             <!-- 图标 -->
             <img class="cmusic_image" src="images/MimicryMusic-full.png" alt="拟声" />
@@ -384,6 +385,12 @@
             <span class="cmusic_textCross">粤公网安备 44011302003939号</span>
         </a>
     </div>
+    <script>
+        var checkEnableJS = document.getElementById('checkEnableJS');
+        if (checkEnableJS) {
+            checkEnableJS.parentElement.removeChild(checkEnableJS);
+        }
+    </script>
     <script src="run.js"></script>
 </body>
 
