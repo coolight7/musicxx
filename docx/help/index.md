@@ -16,7 +16,7 @@
 - [拟声的版本/分支下载选择和区别](list/selectBranch)
 - [支持的音视频格式](list/supportFormat)
 - [在线歌单/本地歌单](list/songSheet/)；两者区别、我喜欢的音乐、互相迁移
-- [扫描本地歌曲](list/scanLocalSong/)；忽略扫描、摘要计算、修改更新本地歌曲信息、歌词
+- [扫描本地歌曲](list/scanLocalSong/)；忽略扫描、修改更新本地歌曲信息、歌词
 - [选择歌曲到歌单中](list/addSongsForPlaylist/)
 - [在歌单内添加/导入歌曲](list/addSongsByPlaylist/)
 

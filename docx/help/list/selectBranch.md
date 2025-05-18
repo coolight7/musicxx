@@ -43,5 +43,9 @@
 apt install libgtk-3-0 libblkid1 liblzma5 libmpv1 ffmpeg libkeybinder-3.0-0 libayatana-appindicator3-1 libayatana-ido3-0.4-0
 ```
 
-## IOS/鸿蒙
+## IOS
+- 支持 arm64 IOS 12.1 或以上
+- 已提供未签名安装包下载，您需要自行搜索如何安装。
+
+## 鸿蒙
 - 敬请期待
