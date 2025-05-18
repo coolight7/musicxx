@@ -13,6 +13,9 @@ function loadData() {
             var item = netRespData[i];
             var systemName = systemTypeToViewName(item["type"]);
             var branchName = branchTypeToViewName(item["branch"]);
+            if (branchName == "SPA4") {
+                continue;
+            }
             var depict = getDepict(item["type"], item["branch"]);
             var li =
                 '<li class="cmusic_playlist_li_notransform" style="margin-top: 10px;margin-bottom: 10px;">'
