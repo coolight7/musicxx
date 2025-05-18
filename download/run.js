@@ -13,7 +13,7 @@ function loadData() {
             var item = netRespData[i];
             var systemName = systemTypeToViewName(item["type"]);
             var branchName = branchTypeToViewName(item["branch"]);
-            if (branchName == "SPA4") {
+            if (item["branch"] == "SPA4") {
                 continue;
             }
             var depict = getDepict(item["type"], item["branch"]);
