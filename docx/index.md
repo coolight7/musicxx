@@ -15,7 +15,7 @@ hero:
       link: /help/
     - theme: alt
       text: GitHub
-      link: https://github.com/coolight7/MimicryMusic
+      link: https://github.com/coolight7/musicxx
   image:
       src: images/logo-tran.png
       alt: 拟声
