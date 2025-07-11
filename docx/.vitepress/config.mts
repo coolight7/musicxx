@@ -44,7 +44,7 @@ export default defineConfig({
       copyright: `版权所有 © 2022-${new Date().getFullYear()} <a href="https://github.com/coolight7">『coolight • 郑泳坤』</a> `
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/coolight7/MimicryMusic' }
+      { icon: 'github', link: 'https://github.com/coolight7/musicxx' }
     ],
     notFound: {
       title: "页面未找到",

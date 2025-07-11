@@ -195,7 +195,7 @@ window.onload = function () {
             }
         }
     };
-    var url = "/api/procedure/get/download/list";
+    var url = "/api/procedure/get/download/list?application=Musicxx";
     if (window.location.host.indexOf("127.0.0.1") >= 0) {
         // 本地测试
         // url = "https://api.music.mimicry.cool" + url;
