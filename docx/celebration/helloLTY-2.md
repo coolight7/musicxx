@@ -1,6 +1,6 @@
 ## 洛天依生日庆典『十二 • 壹』
 - 2025.07.12~2025.07.31
-- [洛天依生日主题页](https://www.bilibili.com/blackboard/era/Lou2024.html)
+- [洛天依生日主题页](https://www.bilibili.com/blackboard/era/Producer2025.html)
 - 参与活动可获得拟声插件『滚动弹幕』
 
 ### 活动要求
