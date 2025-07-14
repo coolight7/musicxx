@@ -1,6 +1,6 @@
 {
     "editor.formatOnSave": true,
-    "liveServer.settings.port": 5500,
+    "liveServer.settings.port": 5501,
     "liveServer.settings.proxy": {
         "enable": false,
         "baseUri": "/api",
