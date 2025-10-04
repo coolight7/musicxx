@@ -17,7 +17,7 @@ hero:
       text: GitHub
       link: https://github.com/coolight7/musicxx
   image:
-      src: images/logo-tran.png
+      src: images/musicxx-glass-blue.png
       alt: 拟声
 
 features:
