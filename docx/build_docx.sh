@@ -8,4 +8,4 @@ mv .vitepress/dist/* build/
 
 mkdir build/images/
 
-cp images/logo-tran.png build/images/logo-tran.png
+cp -r images/ build/
