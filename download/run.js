@@ -13,9 +13,7 @@ function loadData() {
             var item = netRespData[i];
             var systemName = systemTypeToViewName(item["type"]);
             var branchName = branchTypeToViewName(item["branch"]);
-            if (item["branch"] == "SPA4") {
-                continue;
-            }
+
             var depict = getDepict(item["type"], item["branch"]);
             var li =
                 '<li class="cmusic_playlist_li_notransform" style="margin-top: 10px;margin-bottom: 10px;">'
@@ -150,6 +148,9 @@ window.onload = function () {
                             case "SPEXAMINELIMIT": {
                                 branchNum = 7;
                             } break;
+                            case "SPA5": {
+                                branchNum = 6;
+                            } break;
                         }
                         var systemNum = 0;
                         switch (item.type) {
@@ -196,11 +197,11 @@ window.onload = function () {
         }
     };
     var url = "/api/procedure/get/download/list?application=Musicxx";
-    if (window.location.host.indexOf("127.0.0.1") >= 0) {
-        // 本地测试
-        // url = "https://api.music.mimicry.cool" + url;
-        url = "http://127.0.0.1:1000" + url;
-    }
+    // if (window.location.host.indexOf("127.0.0.1") >= 0) {
+    //     // 本地测试
+    //     url = "https://api.music.bool.run" + url;
+    //     // url = "http://127.0.0.1:1000" + url;
+    // }
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Cache-control", "no-store, max-age=0");
     xhr.send(null);
@@ -241,7 +242,9 @@ function systemTypeToIconFile(type) {
 function branchTypeToViewName(type) {
     switch (type) {
         case "SPA4":
-            return "泛支持版";
+            return "安卓4支持版";
+        case "SPA5":
+            return "安卓5支持版";
         case "Main":
             return "";
     }
@@ -252,6 +255,9 @@ function getDepict(system, branch) {
         case "android":
             if (branch == "Main") {
                 return '• 系统要求：Android 5.0 或以上';
+            } else if (branch == "SPA5") {
+                return '• 系统要求：Android 5.0 或以上;\n'
+                    + '• 为兼容安卓5.x，舍弃了很多功能和性能，不建议使用该分支。';
             } else if (branch == "SPA4") {
                 return '• 系统要求：Android 4.1 或以上;\n'
                     + '• 为兼容安卓4.x，舍弃了很多功能和性能，且已经很久未更新，不建议使用该分支。';
@@ -267,7 +273,7 @@ function getDepict(system, branch) {
             return '• 系统要求：arm64/x64 Macos11 或以上';
         case "linux":
             return '• 系统要求：x64\n'
-                + '• 需要安装依赖包，建议查看<a class="cmusic_textLink" href="https://blog.mimicry.cool/help/list/selectBranch.html#linux">安装帮助</a>';
+                + '• 可能需要安装依赖包，建议查看<a class="cmusic_textLink" href="https://blog.mimicry.cool/help/list/selectBranch.html#linux">安装帮助</a>';
     }
     return ""
 }
