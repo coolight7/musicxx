@@ -254,7 +254,7 @@ function getDepict(system, branch) {
     switch (system) {
         case "android":
             if (branch == "Main") {
-                return '• 系统要求：Android 5.0 或以上';
+                return '• 系统要求：Android 7.0 或以上';
             } else if (branch == "SPA5") {
                 return '• 系统要求：Android 5.0 或以上;\n'
                     + '• 为兼容安卓5.x，舍弃了很多功能和性能，不建议使用该分支。';
@@ -263,7 +263,7 @@ function getDepict(system, branch) {
                     + '• 为兼容安卓4.x，舍弃了很多功能和性能，且已经很久未更新，不建议使用该分支。';
             }
         case 'ios':
-            return '• 系统要求：arm64 IOS 12.1 或以上\n'
+            return '• 系统要求：arm64 IOS 13.0 或以上\n'
                 + '• 目前仅开放 未签名安装包，需要自行搜索如何安装\n';
         case "windows":
             if (branch == "Main") {
