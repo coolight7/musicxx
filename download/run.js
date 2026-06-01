@@ -273,7 +273,7 @@ function getDepict(system, branch) {
             return '• 系统要求：arm64/x64 Macos11 或以上';
         case "linux":
             return '• 系统要求：x64\n'
-                + '• 可能需要安装依赖包，建议查看<a class="cmusic_textLink" href="https://blog.mimicry.cool/help/list/selectBranch.html#linux">安装帮助</a>';
+                + '• 可能需要安装依赖包，建议查看<a class="cmusic_textLink" href="https://blog.music.bool.run/help/list/selectBranch.html#linux">安装帮助</a>';
     }
     return ""
 }

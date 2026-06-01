@@ -14,7 +14,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '主页', link: '/' },
-      { text: '下载', link: 'https://download.music.mimicry.cool/' },
+      { text: '下载', link: 'https://download.music.bool.run/' },
       { text: '了解拟声', link: '/info/' },
       { text: '使用帮助', link: '/help/' },
       { text: '关于作者', link: '/about/author/' },
@@ -24,7 +24,7 @@ export default defineConfig({
       {
         text: '目录',
         items: [
-          { text: '下载', link: 'https://download.music.mimicry.cool/' },
+          { text: '下载', link: 'https://download.music.bool.run/' },
           { text: '了解拟声', link: '/info/' },
           { text: '使用帮助', link: '/help/' },
           { text: '拟声++', link: '/musicPlusPlus/' },

@@ -4,6 +4,6 @@
     "liveServer.settings.proxy": {
         "enable": false,
         "baseUri": "/api",
-        "proxyUri": "https://download.music.mimicry.cool/api/"
+        "proxyUri": "https://download.music.bool.run/api/"
     }
 }

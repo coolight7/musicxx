@@ -35,8 +35,8 @@ window.onload = () => {
         }
     };
     xhr.open(
-        "POST", 
-        "https://api.music.mimicry.cool/api/user/baiduPan/refreshAccessToken?authCode=" + authCode + "&state="+jwtToken, 
+        "POST",
+        "https://api.music.bool.run/api/user/baiduPan/refreshAccessToken?authCode=" + authCode + "&state=" + jwtToken,
         true,
     );
     xhr.send(null);

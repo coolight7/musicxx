@@ -26,7 +26,7 @@
   - 丰富的过渡动画、Q弹的滚动效果
 
 ## 下载
-- [下载官网](https://download.music.mimicry.cool/)
+- [下载官网](https://download.music.bool.run/)
 - 支持安卓/windows/macos/linux
 
 ## 使用帮助

@@ -9,7 +9,7 @@
   - [加入群聊](/about/qqgroup)获得更多帮助
 
 ## 提交Bug和建议
-- 建议在QQ频道里留言，也可以在[拟声的GitHub项目](https://github.com/coolight7/MimicryMusic/issues)中的Issue提出Bug和建议（**访问Github很可能需要挂VPN/梯子**）；
+- 建议在QQ频道里留言，也可以在[拟声的GitHub项目](https://github.com/coolight7/musicxx/issues)中的Issue提出Bug和建议（**访问Github很可能需要挂VPN/梯子**）；
 - **如果在群里或联系作者可能会被覆盖看不到。**
 
 ## 开始

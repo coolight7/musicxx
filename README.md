@@ -1,7 +1,7 @@
 # Musicxx 拟声
-* [官网](https://blog.mimicry.cool/)
-* [下载官网](https://download.music.mimicry.cool/)
-* [GitHub](https://github.com/coolight7/MimicryMusic)
+* [官网](https://blog.music.bool.run/)
+* [下载官网](https://download.music.bool.run/)
+* [GitHub](https://github.com/coolight7/musicxx)
 
 ## 简介
 * 新拟物风格的 音视频播放器

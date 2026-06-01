@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 下载
-      link: https://download.music.mimicry.cool/
+      link: https://download.music.bool.run/
     - theme: alt
       text: 使用帮助
       link: /help/
