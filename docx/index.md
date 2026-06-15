@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "拟声"
+  name: "拟声 • Musicxx"
   text: "本地/云盘/NAS全格式音视频播放器"
   tagline: 多系统/音源支持、歌词弹幕、跨设备共享与控制
   actions:
