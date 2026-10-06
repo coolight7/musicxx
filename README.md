@@ -20,12 +20,15 @@
   * `同步歌单音源`：自动拉取绑定的本地歌曲/webdav/云盘音源，更新添加到歌单中
   * `智能识别`：自动从bili标题中识别歌曲标题、歌手，并支持歌手、专辑分类时自动关联简写名、繁简体、错拼名等
 - 已开源的开发拟声时的库:
+  - [musicxx_extern_plugin](https://github.com/coolight7/musicxx_extern_plugin):
+    - 拟声的外置插件框架，支持 动态加载 C++动态库插件、JS脚本插件、shader着色器渲染
+    - 如果需要自定义实现插件，请参考该框架文档，以及里面的示例插件
+  - [agentxx](https://github.com/coolight7/agentxx):
+    - C++实现的高性能 AI Agent，摆脱复杂庞大的依赖库和运行环境，体积小的同时速度快内存占用低，Win端运行时仅需3MB内存! 
+    - 嵌入 app 中，辅助实现各种 agent 功能，以及提供外置插件基础框架支持
   - [mediaxx](https://github.com/coolight7/mediaxx): 
     - 融合编译 ffmpeg/libmpv, 一个程序中如果需要打包 ffmpeg、libmpv 以及自己开发的音频处理库，分开编译会有很多依赖库代码是重复的，`mediaxx`合并编译成一个库，并控制导出符号，可以减少动态/静态链接混合等问题且大幅缩减体积 (musicxx从63MB->40MB; lumenxx从140MB->50MB)
     - 读取音视频文件的基本信息、封面、结合uchardet、iconv尝试识别字符串的字符编码格式转换到 utf8、分析图片颜色
-  - [agentxx](https://github.com/coolight7/agentxx):
-    - C++实现的高性能 AI Agent，摆脱复杂庞大的依赖库和运行环境，体积小的同时速度快内存占用低，Win端运行时仅需2MB内存! 
-    - 嵌入 app 中，辅助实现各种 agent 功能
   - [lyric_xx](https://github.com/coolight7/lyric_xx): 
     - 超高兼容性的 lrc 编解码库，由于 LRC 歌词鱼龙混杂，我们开发了 `lyric_xx` 用于尽力兼容各种 LRC 标准和非标准格式
     - 支持解析 逐行LRC、增强型LRC、同时间戳/无时间戳的翻译歌词、允许歌词行乱序、前后置时间戳、一行多时间戳、一行多句歌词 等

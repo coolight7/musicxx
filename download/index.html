@@ -163,11 +163,10 @@
             background-color: #66ccff;
             border: none;
             height: 40px;
+            width: 130px;
             border-radius: 10px;
             padding-top: 10px;
             padding-bottom: 10px;
-            padding-left: 30px;
-            padding-right: 30px;
             align-items: center;
             justify-content: center;
             box-shadow: 10px 10px 15px #19191e, -5px -5px 10px #4b505a;
@@ -212,6 +211,83 @@
             margin: 7%;
             padding: 20px;
             border-radius: 30px;
+        }
+
+        /*版本号徽章：点一下弹窗选版本*/
+        .cmusic_version_chip {
+            display: inline-block;
+            background-color: #66ccff;
+            border-radius: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-bottom: 10px;
+            max-width: 60%;
+            cursor: pointer;
+        }
+
+        .cmusic_version_text {
+            font-size: large;
+            font-weight: normal;
+            color: #fff;
+        }
+
+        /*版本号右边的左箭头，提示这里可以点开选择版本（纯 CSS 画的，不依赖字体）*/
+        .cmusic_version_arrow {
+            display: inline-block;
+            width: 0px;
+            height: 0px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-right: 7px solid #fff;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        /*版本弹窗里的每一行*/
+        .cmusic_version_item {
+            cursor: pointer;
+        }
+
+        .cmusic_version_item:hover {
+            background-color: #2a3138;
+        }
+
+        /*更新日志正文，保留换行和缩进*/
+        .cmusic_verlog {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-word;
+            font-size: large;
+            color: #78778f;
+            background-color: #2a3138;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 10px;
+            max-height: 400px;
+            max-height: 60vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /*日志里的 `高亮` 内容*/
+        .cmusic_verlog_code {
+            color: #66ccff;
+        }
+
+        /*日志里的 ## 标题行*/
+        .cmusic_verlog_head {
+            color: #dde8fc;
+            font-weight: bolder;
+        }
+
+        @media only screen and (min-width: 640px) {
+            .cmusic_version_text {
+                font-size: 3vmin;
+            }
+
+            .cmusic_verlog {
+                font-size: 3vmin;
+            }
         }
 
 
@@ -303,7 +379,7 @@
     <div class="musicxx_hide" id="mimicry_popup">
         <div class="mimicry_popup_content">
             <div class="mimicry_row" style="justify-content: space-between;align-items: center;">
-                <span class="cmusic_textMain">选择系统架构</span>
+                <span class="cmusic_textMain">选择系统架构 <span class="cmusic_textCross" id="popupVersion"></span></span>
                 <button class="mimicry_button" onclick="popupClose()" style="align-self: self-end;">关闭</button>
             </div>
             <div style="height: 20px;"></div>
@@ -313,6 +389,35 @@
                     <span class="cmusic_textCross">『空空如也』</span>
                 </li>
             </ul>
+        </div>
+    </div>
+    <div class="musicxx_hide" id="mimicry_log_popup">
+        <div class="mimicry_popup_content">
+            <div class="mimicry_row" style="justify-content: space-between;align-items: center;">
+                <span class="cmusic_textMain">更新日志</span>
+                <button class="mimicry_button" onclick="popupClose()" style="align-self: self-end;">关闭</button>
+            </div>
+            <div style="height: 20px;"></div>
+            <div style="background-color: #2f363e;border-radius: 20px;padding: 15px;">
+                <span class="cmusic_textMain" id="logPopupVersion" style="display: block;"></span>
+                <div class="cmusic_verlog" id="logPopupText"></div>
+            </div>
+        </div>
+    </div>
+    <div class="musicxx_hide" id="mimicry_version_popup">
+        <div class="mimicry_popup_content">
+            <div class="mimicry_row" style="justify-content: space-between;align-items: center;">
+                <span class="cmusic_textMain">选择版本 <span class="cmusic_textCross" id="versionPopupTitle"></span></span>
+                <button class="mimicry_button" onclick="popupClose()" style="align-self: self-end;">关闭</button>
+            </div>
+            <div style="height: 20px;"></div>
+            <div style="background-color: #2f363e;border-radius: 20px;padding-top: 10px;padding-bottom: 10px;max-height: 400px;max-height: 60vh;overflow-y: auto;-webkit-overflow-scrolling: touch;">
+                <ul id="versionPopupList" class="cmusic_playList_ul"></ul>
+            </div>
+            <div class="mimicry_row musicxx_hide" id="versionPopupMore"
+                style="justify-content: center;align-items: center;margin-top: 20px;">
+                <button class="mimicry_button mimicry_button_normal" id="versionMoreBtn" onclick="loadMoreVersions()">加载更多</button>
+            </div>
         </div>
     </div>
     <div class="mimicry_column musicxx_hide" id="adaptBody">
@@ -331,11 +436,10 @@
                         href="https://blog.music.bool.run/">•『 官网与使用帮助 』</a>
                     <a class="cmusic_textLink" style="margin-bottom: 15px;display: block; color: rosybrown"
                         href="https://blog.music.bool.run/help/list/selectBranch.html">•『 如何选择版本和分支 』</a>
-                    <a class="cmusic_textLink" style="margin-bottom: 15px;display: block;"
-                        href="https://www.123865.com/s/7dgajv-9HGVv">•『 历史版本下载 』</a>
-                    <a class="cmusic_textLink" style="margin-bottom: 15px;display: block; color: rosybrown"
+                    <a class="cmusic_textLink" style="margin-bottom: 15px;display: block"
                         href="https://blog.coolight.bool.run/">•『 我们的其他APP 』</a>
                     <span class="cmusic_textCross">• 若无法安装，请尝试更换浏览器/关闭安全软件</span>
+                    <span class="cmusic_textCross" style="display: block;">• 点击版本号可以切换选择版本</span>
                 </div>
             </div>
         </div>

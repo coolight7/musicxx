@@ -1,84 +1,142 @@
 var listId = "list";
 var downlistId = "downlist";
 var popupId = "mimicry_popup";
+var popupVersionId = "popupVersion";
+var logPopupId = "mimicry_log_popup";
+var logPopupVersionId = "logPopupVersion";
+var logPopupTextId = "logPopupText";
+var versionPopupId = "mimicry_version_popup";
+var versionPopupTitleId = "versionPopupTitle";
+var versionPopupListId = "versionPopupList";
+var versionPopupMoreId = "versionPopupMore";
+var versionMoreBtnId = "versionMoreBtn";
 var adaptBodyId = "adaptBody";
+
+// 版本列表一页 20 个版本
+var VERSION_PAGE_SIZE = 20;
 
 var netRespData = [];
 
+// 每个平台（type + branch）的版本列表状态：
+// records 已取回的记录（版本倒序），showCount 当前展示多少条，
+// serverPaged 服务端是否支持分页（不支持就一次取全后在本地分页）
+var versionStore = {};
+// 当前打开的版本弹窗属于哪个平台，-1 表示没打开
+var versionPopupIndex = -1;
+
 function loadData() {
     var listWidget = document.getElementById(listId);
-    if (null != listWidget) {
-        var innerHtml = "";
-        for (var i = 0; i < netRespData.length; ++i) {
-            var item = netRespData[i];
-            var systemName = systemTypeToViewName(item["type"]);
-            var branchName = branchTypeToViewName(item["branch"]);
-
-            var depict = getDepict(item["type"], item["branch"]);
-            var li =
-                '<li class="cmusic_playlist_li_notransform" style="margin-top: 10px;margin-bottom: 10px;">'
-                + '    <div class="mimicry_row" style="margin-bottom: 10px;justify-content: space-between;align-items: center;">'
-                + '        <div class="mimicry_row" style="align-items: center;">'
-                + '            <img class="cmusic_icon" src="images/{{item_icon}}" />'
-                + '            <div class="mimicry_row" style="align-items: center;">'
-                + '                <span class="cmusic_textMain">{{systemName}} {{branchName}}</span>'
-                + '            </div>'
-                + '        </div>'
-                + '        <button class="mimicry_button" onClick="download({{index}})">下载</button>'
-                + '    </div>'
-                + '    <div class="mimicry_row">'
-                + '        <div style="display: inline-block; white-space: nowrap; background-color: #66ccff; border-radius: 5px; padding-left: 5px; padding-right: 5px; margin-bottom:10px; align-items: center; justify-content: center;">'
-                + '            <span class="cmusic_textCross" style="color: #fff;">{{item_version_str}}</span>'
-                + '        </div>'
-                + '    </div>'
-                + '    <span class="cmusic_textCross" style="white-space: pre-line;">{{depict}}</span>'
-                + '</li>';
-            li = li.replace("{{item_icon}}", systemTypeToIconFile(item["type"]));
-            li = li.replace("{{systemName}}", systemName);
-            li = li.replace("{{branchName}}", branchName);
-            li = li.replace("{{index}}", i);
-            li = li.replace("{{item_version_str}}", item['version_str']);
-            li = li.replace("{{depict}}", depict);
-            innerHtml += li;
-        }
-        listWidget.innerHTML = innerHtml;
-        return true;
+    if (null == listWidget) {
+        return false;
     }
-    return false;
+    var innerHtml = "";
+    for (var i = 0; i < netRespData.length; ++i) {
+        var item = netRespData[i];
+        var systemName = systemTypeToViewName(item["type"]);
+        var branchName = branchTypeToViewName(item["branch"]);
+        var depict = getDepict(item["type"], item["branch"]);
+
+        innerHtml += ''
+            + '<li class="cmusic_playlist_li_notransform" style="margin-top: 10px;margin-bottom: 10px;">'
+            + '    <div class="mimicry_row" style="margin-bottom: 10px;justify-content: space-between;align-items: center;">'
+            + '        <div class="mimicry_row" style="align-items: center;">'
+            + '            <img class="cmusic_icon" src="images/' + systemTypeToIconFile(item["type"]) + '" />'
+            + '            <div class="mimicry_row" style="align-items: center;">'
+            + '                <span class="cmusic_textMain">' + systemName + ' ' + branchName + '</span>'
+            + '            </div>'
+            + '        </div>'
+            + '        <button class="mimicry_button" onClick="download(' + i + ')">下载</button>'
+            + '    </div>'
+            + '    <div class="mimicry_row" style="margin-bottom: 10px;justify-content: space-between;align-items: center;">'
+            + '        <span class="cmusic_version_chip" onClick="openVersionPopup(' + i + ')">'
+            + '            <span class="cmusic_version_text" id="versiontext_' + i + '">' + escapeHtml(item["version_str"]) + '</span>'
+            + '            <span class="cmusic_version_arrow"></span>'
+            + '        </span>'
+            + '        <button class="mimicry_button mimicry_button_normal" onClick="showUpdateLog(' + i + ')">更新日志</button>'
+            + '    </div>'
+            + '    <span class="cmusic_textCross" style="white-space: pre-line;">' + depict + '</span>'
+            + '</li>';
+    }
+    listWidget.innerHTML = innerHtml;
+    return true;
 }
 
+// 点『下载』：下载当前选中的那个版本
 function download(index) {
-    var item = netRespData[index];
-    var list = JSON.parse(item["downlist"]);
-    if (list.length == 0) {
-        window.open(item["link"], "_blank");
-    } else if (list.length == 1) {
-        window.open(list[0]["link"], "_blank");
-    } else {
-        var innerHtml = "";
-        for (var i = 0; i < list.length; ++i) {
-            var item = list[i];
-            var li = '<li class="cmusic_playlist_li_notransform" style="padding-top: 20px;padding-bottom: 20px;">'
-                + '    <div class="mimicry_row" style="justify-content: space-between;">'
-                + '        <span class="cmusic_textMain">{{item_name}}</span>'
-                + '        <button '
-                + '            class="{{item_class}}"'
-                + '            onClick="downloadLink(\'{{item_link}}\')"'
-                + '            >下载</button>'
-                + '    </div>'
-                + '    <span class="cmusic_textCross">{{item_depict}}</span>'
-                + '</li>';
-            li = li.replace("{{item_name}}", item["name"]);
-            li = li.replace("{{item_button_class}}", item["name"]);
-            li = li.replace("{{item_class}}", (item["name"] == "arm64") ? "mimicry_button" : 'mimicry_button mimicry_button_normal');
-            li = li.replace("{{item_link}}", item["link"]);
-            li = li.replace("{{item_depict}}", item["depict"]);
-            innerHtml += li;
-        }
-        var popupWidget = document.getElementById(downlistId);
-        popupWidget.innerHTML = innerHtml;
-        popupOpen();
+    var item = getDownloadRecord(index);
+    var list = null;
+    try {
+        list = JSON.parse(item["downlist"]);
+    } catch (e) {
+        list = null;
     }
+    if (null == list) {
+        list = [];
+    }
+    if (0 == list.length) {
+        var link = (null == item["link"]) ? "" : "" + item["link"];
+        if (link.length > 0) {
+            window.open(link, "_blank");
+            return;
+        }
+        showNoLink(item);
+        return;
+    }
+    if (1 == list.length) {
+        window.open(list[0]["link"], "_blank");
+        return;
+    }
+    var innerHtml = "";
+    for (var i = 0; i < list.length; ++i) {
+        var downItem = list[i];
+        var li = '<li class="cmusic_playlist_li_notransform" style="padding-top: 20px;padding-bottom: 20px;">'
+            + '    <div class="mimicry_row" style="justify-content: space-between;">'
+            + '        <span class="cmusic_textMain">{{item_name}}</span>'
+            + '        <button '
+            + '            class="{{item_class}}"'
+            + '            onClick="downloadLink(\'{{item_link}}\')"'
+            + '            >下载</button>'
+            + '    </div>'
+            + '    <span class="cmusic_textCross">{{item_depict}}</span>'
+            + '</li>';
+        li = li.replace("{{item_name}}", downItem["name"]);
+        li = li.replace("{{item_class}}", (downItem["name"] == "arm64") ? "mimicry_button" : 'mimicry_button mimicry_button_normal');
+        li = li.replace("{{item_link}}", downItem["link"]);
+        li = li.replace("{{item_depict}}", downItem["depict"]);
+        innerHtml += li;
+    }
+    var popupWidget = document.getElementById(downlistId);
+    popupWidget.innerHTML = innerHtml;
+    // 弹窗里标出要下载的是哪个版本
+    setElementHtml(popupVersionId, escapeHtml(item["version_str"]));
+    popupOpenById(popupId);
+}
+
+// 该版本没有安装包链接时在弹窗里说明，避免用户以为下载坏了
+function showNoLink(inItem) {
+    var popupWidget = document.getElementById(downlistId);
+    if (null == popupWidget) {
+        return;
+    }
+    popupWidget.innerHTML = ''
+        + '<li class="cmusic_playlist_li_notransform" style="padding-top: 20px;padding-bottom: 20px;">'
+        + '    <span class="cmusic_textCross">『该版本没有可用的安装包链接，请重新选择版本』</span>'
+        + '</li>';
+    setElementHtml(popupVersionId, escapeHtml(inItem["version_str"]));
+    popupOpenById(popupId);
+}
+
+// 点『更新日志』：弹窗显示当前选中版本的更新日志
+function showUpdateLog(index) {
+    var item = getVersionRecord(index);
+    setElementHtml(logPopupVersionId, versionTitleHtml(index, item));
+    var logStr = (null == item["log"]) ? "" : "" + item["log"];
+    if (logStr.length <= 0) {
+        setElementHtml(logPopupTextId, '<span class="cmusic_textCross">该版本没有填写更新日志</span>');
+    } else {
+        setElementHtml(logPopupTextId, versionLogToHtml(logStr));
+    }
+    popupOpenById(logPopupId);
 }
 
 function downloadLink(link) {
@@ -87,18 +145,14 @@ function downloadLink(link) {
     }
 }
 
-function popupOpen() {
-    var popupWidget = document.getElementById(popupId);
-    if (null != popupWidget) {
-        popupWidget.className = "mimicry_popup";
-    }
+function popupOpenById(inId) {
+    setElementClass(inId, "mimicry_popup");
 }
 
 function popupClose() {
-    var popupWidget = document.getElementById(popupId);
-    if (null != popupWidget) {
-        popupWidget.className = "musicxx_hide";
-    }
+    setElementClass(popupId, "musicxx_hide");
+    setElementClass(logPopupId, "musicxx_hide");
+    setElementClass(versionPopupId, "musicxx_hide");
 }
 
 function removeBobbom() {
@@ -116,13 +170,358 @@ function autoAdaptLayout() {
     }
 }
 
+/* ==================== 版本列表与更新日志 ==================== */
+
+// 文本转义后再写进页面，避免日志里的 < > & 破坏页面
+function escapeHtml(inText) {
+    var text = (null == inText) ? "" : "" + inText;
+    text = text.replace(/&/g, "&amp;");
+    text = text.replace(/</g, "&lt;");
+    text = text.replace(/>/g, "&gt;");
+    return text;
+}
+
+// 更新日志里只有少量 markdown 写法，这里只处理 `高亮` 和行首的 ## 标题
+function versionLogToHtml(inText) {
+    var html = escapeHtml(inText);
+    html = html.replace(/`([^`\r\n]+)`/g, '<span class="cmusic_verlog_code">$1</span>');
+    html = html.replace(/(^|[\r\n])[ \t]*#{1,6}[ \t]+([^\r\n]+)/g, '$1<span class="cmusic_verlog_head">$2</span>');
+    return html;
+}
+
+// 更新日志里记录的是秒级时间戳，这里按本地时间显示到日期
+function formatDateStr(inTimestamp) {
+    var stamp = parseInt(inTimestamp, 10);
+    if (isNaN(stamp) || stamp <= 0) {
+        return "";
+    }
+    var date = new Date(stamp * 1000);
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    return date.getFullYear() + "-" + (month < 10 ? "0" + month : "" + month) + "-" + (day < 10 ? "0" + day : "" + day);
+}
+
+function versionCacheKey(inItem) {
+    return inItem["type"] + "_" + inItem["branch"];
+}
+
+// 是不是下载列表里的那个最新版本
+// 版本列表里的记录不带安装包链接，最新版本统一用下载列表里的那条
+function isLatestVersion(index, inItem) {
+    var item = netRespData[index];
+    return parseInt(inItem["version"], 10) == parseInt(item["version"], 10);
+}
+
+// 取某个平台的版本列表状态
+function getVersionStore(index) {
+    var key = versionCacheKey(netRespData[index]);
+    var store = versionStore[key];
+    if (null == store) {
+        store = {
+            "records": [],      // 已经取回的记录，版本倒序
+            "showCount": 0,     // 列表里现在展示多少条
+            "serverPaged": true, // 服务端支持分页时，取一页显示一页
+            "noMore": false,    // 没有下一页了
+            "loading": false,   // 正在请求
+            "failed": false,    // 上一次请求失败
+            "selected": parseInt(netRespData[index]["version"], 10) // 当前选中的版本，默认最新
+        };
+        versionStore[key] = store;
+    }
+    return store;
+}
+
+// 当前选中的版本记录，还没取到这份数据时返回 null
+function getSelectedRecord(index) {
+    var store = getVersionStore(index);
+    for (var i = 0; i < store.records.length; ++i) {
+        if (store.records[i]["version"] == store.selected) {
+            return store.records[i];
+        }
+    }
+    return null;
+}
+
+// 看日志用的记录：取不到时退回下载列表里的最新版本
+function getVersionRecord(index) {
+    var record = getSelectedRecord(index);
+    if (null == record) {
+        return netRespData[index];
+    }
+    return record;
+}
+
+// 下载用的记录：最新版本用下载列表里的那条（带安装包链接）
+function getDownloadRecord(index) {
+    var record = getVersionRecord(index);
+    if (true == isLatestVersion(index, record)) {
+        return netRespData[index];
+    }
+    return record;
+}
+
+function setElementHtml(inId, inHtml) {
+    var widget = document.getElementById(inId);
+    if (null != widget) {
+        widget.innerHTML = inHtml;
+    }
+}
+
+function setElementClass(inId, inClassName) {
+    var widget = document.getElementById(inId);
+    if (null != widget) {
+        widget.className = inClassName;
+    }
+}
+
+// 解析接口返回的 {"code":..,"data":..}，取不到数据时返回 null
+function parseRespData(inText) {
+    var respJson = null;
+    if ("undefined" != typeof JSON && null != JSON.parse) {
+        try {
+            respJson = JSON.parse(inText);
+        } catch (e) {
+            respJson = null;
+        }
+    }
+    if (null == respJson) {
+        try {
+            respJson = (new Function("return " + inText))();
+        } catch (e) {
+            respJson = null;
+        }
+    }
+    if (null == respJson || null == respJson["data"] || null == respJson["data"].length) {
+        return null;
+    }
+    return respJson["data"];
+}
+
+function requestJsonList(inUrl, inCallback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (4 != xhr.readyState) {
+            return;
+        }
+        var list = null;
+        if (xhr.status >= 200 && xhr.status < 300) {
+            list = parseRespData(xhr.responseText);
+        }
+        inCallback(list);
+    };
+    xhr.open("GET", inUrl, true);
+    xhr.setRequestHeader("Cache-control", "no-store, max-age=0");
+    xhr.send(null);
+}
+
+// 点版本号：打开版本弹窗，第一次打开时才去取第一页版本
+function openVersionPopup(index) {
+    var item = netRespData[index];
+    var store = getVersionStore(index);
+    versionPopupIndex = index;
+    setElementHtml(
+        versionPopupTitleId,
+        escapeHtml(systemTypeToViewName(item["type"]) + " " + branchTypeToViewName(item["branch"]))
+    );
+    popupOpenById(versionPopupId);
+    if (0 == store.records.length) {
+        setElementHtml(
+            versionPopupListId,
+            '<li class="cmusic_playlist_li_notransform" style="padding-top: 12px;padding-bottom: 12px;">'
+            + '<span class="cmusic_textCross">正在加载版本列表...</span></li>'
+        );
+        loadMoreVersions();
+    } else {
+        renderVersionPopup(index);
+    }
+}
+
+// 取下一页版本（弹窗底部的『加载更多』也走这里）
+function loadMoreVersions() {
+    var index = versionPopupIndex;
+    if (index < 0) {
+        return;
+    }
+    var store = getVersionStore(index);
+    if (true == store.loading) {
+        return;
+    }
+    // 本地还有没展示出来的，直接往下翻
+    if (store.showCount < store.records.length) {
+        store.showCount = Math.min(store.showCount + VERSION_PAGE_SIZE, store.records.length);
+        renderVersionPopup(index);
+        return;
+    }
+    if (true == store.noMore) {
+        return;
+    }
+    loadVersionPage(index);
+}
+
+// 一页一页地从服务端取版本记录
+function loadVersionPage(index) {
+    var item = netRespData[index];
+    var store = getVersionStore(index);
+    store.loading = true;
+    store.failed = false;
+    renderVersionPopup(index);
+    if (true == store.serverPaged) {
+        requestJsonList(
+            "/api/procedure/get/version/list?application=Musicxx"
+            + "&type=" + encodeURIComponent(item["type"])
+            + "&branch=" + encodeURIComponent(item["branch"])
+            + "&offset=" + store.records.length
+            + "&limit=" + VERSION_PAGE_SIZE,
+            function (list) {
+                if (null != list) {
+                    store.loading = false;
+                    appendVersionRecords(store, list);
+                    store.showCount = store.records.length; // 服务端分页：取回多少就展示多少
+                    store.noMore = (list.length < VERSION_PAGE_SIZE);
+                    renderVersionPopup(index);
+                    return;
+                }
+                // 服务端还没有分页接口（老服务端）：退回更新日志接口，一次取全后在本地分页
+                store.serverPaged = false;
+                loadVersionPage(index);
+            }
+        );
+        return;
+    }
+    requestJsonList(
+        "/api/procedure/get/versionLog?from=0&application=Musicxx"
+        + "&type=" + encodeURIComponent(item["type"])
+        + "&branch=" + encodeURIComponent(item["branch"]),
+        function (list) {
+            store.loading = false;
+            if (null == list) {
+                store.failed = true;
+                renderVersionPopup(index);
+                return;
+            }
+            appendVersionRecords(store, list);
+            store.showCount = Math.min(VERSION_PAGE_SIZE, store.records.length);
+            store.noMore = true;
+            renderVersionPopup(index);
+        }
+    );
+}
+
+function appendVersionRecords(store, list) {
+    for (var i = 0; i < list.length; ++i) {
+        store.records[store.records.length] = list[i];
+    }
+    // 版本号倒序，最新的排在最前面
+    store.records.sort(function (left, right) {
+        return right["version"] - left["version"];
+    });
+    // 同一版本号有多条记录时只留一条
+    var unique = [];
+    for (var j = 0; j < store.records.length; ++j) {
+        if (j > 0 && store.records[j]["version"] == unique[unique.length - 1]["version"]) {
+            continue;
+        }
+        unique[unique.length] = store.records[j];
+    }
+    store.records = unique;
+}
+
+// 画版本弹窗：列表 + 底部按钮（加载更多 / 正在加载 / 重试）
+function renderVersionPopup(index) {
+    var store = getVersionStore(index);
+    var count = Math.min(store.showCount, store.records.length);
+    var innerHtml = "";
+    if (0 == count) {
+        innerHtml = '<li class="cmusic_playlist_li_notransform" style="padding-top: 12px;padding-bottom: 12px;">'
+            + '<span class="cmusic_textCross">没有取到版本列表</span></li>';
+    }
+    for (var i = 0; i < count; ++i) {
+        var record = store.records[i];
+        var isSelected = (record["version"] == store.selected);
+        innerHtml += '<li class="cmusic_playlist_li_notransform cmusic_version_item"'
+            + ' onClick="chooseVersion(' + index + ', ' + record["version"] + ')"'
+            + ' style="padding-top: 12px;padding-bottom: 12px;">'
+            + '    <div class="mimicry_row" style="justify-content: space-between;align-items: center;">'
+            + '        <span class="cmusic_textMain"' + (isSelected ? ' style="color: #66ccff;"' : '') + '>'
+            + escapeHtml(record["version_str"])
+            + (true == isLatestVersion(index, record) ? '（最新）' : '')
+            + '</span>'
+            + '        <span class="cmusic_textCross">' + escapeHtml(formatDateStr(record["created_time"]))
+            + (isSelected ? ' · 已选择' : '') + '</span>'
+            + '    </div>'
+            + '</li>';
+    }
+    if (true == store.failed) {
+        innerHtml += '<li class="cmusic_playlist_li_notransform" style="padding-top: 12px;padding-bottom: 12px;">'
+            + '<span class="cmusic_textCross" style="color: #F00;">『版本列表加载失败』</span></li>';
+    }
+    setElementHtml(versionPopupListId, innerHtml);
+
+    var moreBtn = document.getElementById(versionMoreBtnId);
+    if (true == store.loading) {
+        setElementClass(versionPopupMoreId, "mimicry_row");
+        if (null != moreBtn) {
+            moreBtn.innerHTML = "正在加载...";
+            moreBtn.disabled = true;
+        }
+        return;
+    }
+    if (null != moreBtn) {
+        moreBtn.innerHTML = (true == store.failed) ? "重试" : "加载更多";
+        moreBtn.disabled = false;
+    }
+    var hasMore = (store.showCount < store.records.length) || (false == store.noMore);
+    setElementClass(versionPopupMoreId, hasMore ? "mimicry_row" : "musicxx_hide");
+}
+
+// 选中某个版本：更新版本号徽章并把弹窗关掉
+function chooseVersion(index, version) {
+    var store = getVersionStore(index);
+    store.selected = version;
+    setElementHtml("versiontext_" + index, escapeHtml(versionText(index, version)));
+    popupClose();
+}
+
+function versionText(index, version) {
+    var store = getVersionStore(index);
+    for (var i = 0; i < store.records.length; ++i) {
+        if (store.records[i]["version"] == version) {
+            return "" + store.records[i]["version_str"];
+        }
+    }
+    var item = netRespData[index];
+    if (item["version"] == version) {
+        return "" + item["version_str"];
+    }
+    return "" + version;
+}
+
+// 更新日志弹窗的标题：版本号、名称、日期
+function versionTitleHtml(index, inItem) {
+    var html = escapeHtml(inItem["version_str"]);
+    var nameStr = (null == inItem["name"]) ? "" : "" + inItem["name"];
+    if (nameStr.length > 0 && nameStr.indexOf("" + inItem["version_str"]) < 0) {
+        html += " · " + escapeHtml(nameStr);
+    }
+    var dateStr = formatDateStr(inItem["created_time"]);
+    if (dateStr.length > 0) {
+        html += " · " + dateStr;
+    }
+    if (true == isLatestVersion(index, inItem)) {
+        html += ' · <span style="color: #66ccff;">当前最新版本</span>';
+    }
+    return html;
+}
+
+/* =========================================================== */
+
 window.onresize = autoAdaptLayout;
 
 window.onload = function () {
     // 自适应横竖屏
     autoAdaptLayout();
     // 请求下载列表
-    xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             var rebool = (function () {
